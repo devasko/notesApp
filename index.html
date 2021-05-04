@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/vue"></script>
+    <title>Notes App</title>
+</head>
+<body>
+
+<div id="app">
+    <h1>{{ title }}</h1>
+
+    <!-- Новая заметка -->
+    <div class="new_note">
+        <input type="text" v-model="note.title">
+        <textarea v-model="note.desc"></textarea>
+
+        <button type="submit" @click="addNote">Добавить заметку</button>
+    </div>
+<!-- Список заметок -->
+    <div class="notes">
+        <div class="note" v-for="(note, index) in notes" :key="index">
+            <div class="note__header">
+                <p>{{ note.title }}</p>
+            </div>
+
+            <div class="note__body">
+                <p>{{ note.desc }}</p>
+            </div>
+
+            <div class="note__footer">
+                <span>{{ note.date }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            title: 'Заметки',
+
+            note: {
+                title: '',
+                desc: '',
+            },
+
+            notes: [
+                {
+                    title: 'Первая заметка',
+                    desc: 'Описание первой заметки',
+                    date: new Date( Date.now() ).toLocaleString()
+                },
+
+                {
+                    title: 'Вторая заметка',
+                    desc: 'Описание второй заметки',
+                    date: new Date( Date.now() ).toLocaleString()
+                },
+
+                {
+                    title: 'Третья заметка',
+                    desc: 'Описание третьей заметки',
+                    date: new Date( Date.now() ).toLocaleString()
+                },
+            ]
+        },
+
+        methods: {
+            addNote () {
+                let {title, desc, date} = this.note;
+                this.notes.push({
+                    title,
+                    desc,
+                    date: new Date( Date.now() ).toLocaleString()
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>
